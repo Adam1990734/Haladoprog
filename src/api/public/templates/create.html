@@ -1,0 +1,24 @@
+{% extends "shared/mainLayout.html" %}
+
+{% block title %}
+Uploader
+{% endblock %}
+
+{% block content %}
+    <h1>Video Uploader</h1>
+    <form action="/api/upload"
+        method="post"
+        enctype="multipart/form-data"
+    >
+        <input
+            type="file"
+            name="video"
+            accept="video/*"
+            required
+        >
+
+        <button type="submit">
+            Upload
+        </button>
+    </form>
+{% endblock %}

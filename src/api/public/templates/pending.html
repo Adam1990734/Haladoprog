@@ -1,0 +1,27 @@
+{% extends "shared/mainLayout.html" %}
+
+{% block title %}
+Result
+{% endblock %}
+
+{% block content %}
+    <h1>Pending request</h1>
+    <p>Please don't leave the current page!</p>
+    <script>
+        const name = "{{ filename }}"
+
+        async function checkStatus() {
+            const response = await fetch(`/status/${name}`);
+            const data = await response.json();
+
+            if (data.status === "completed") {
+                window.location.href = `/uploads/${data.video_name}`;
+                return;
+            }
+
+            setTimeout(checkStatus, 5000);
+        }
+
+        checkStatus();
+    </script>
+{% endblock %}
