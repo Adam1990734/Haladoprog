@@ -8,20 +8,21 @@ Result
     <h1>Pending request</h1>
     <p>Please don't leave the current page!</p>
     <script>
-        const name = "{{ filename }}"
+        const videoId = "{{ video_id }}";
 
-        async function checkStatus() {
-            const response = await fetch(`/status/${name}`);
+        setInterval(async () => {
+
+            const response = await fetch(
+                `/api/status/${videoId}`
+            );
+
             const data = await response.json();
 
             if (data.status === "completed") {
-                window.location.href = `/uploads/${data.video_name}`;
-                return;
+                window.location.href =
+                    `/result/${videoId}`;
             }
 
-            setTimeout(checkStatus, 5000);
-        }
-
-        checkStatus();
+        }, 5000);
     </script>
 {% endblock %}
