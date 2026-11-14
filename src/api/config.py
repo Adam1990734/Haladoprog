@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from pathlib import Path
-import pathlib
 
 @dataclass
 class Configs:

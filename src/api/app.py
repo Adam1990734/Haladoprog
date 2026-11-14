@@ -5,8 +5,8 @@ from router import mainRouter as mainRouter
 app = FastAPI()
 
 app.mount(
-    "/videos",
-    StaticFiles(directory="../output"),
+    "/api/videos",
+    StaticFiles(directory="C:\\Users\\palma\\GitHubProjects\\Haladoprog\\src\\output"),
     name="videos"
 )
 

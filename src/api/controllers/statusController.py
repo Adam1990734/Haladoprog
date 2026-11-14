@@ -1,7 +1,7 @@
-from pathlib import Path
 from uuid import UUID
 
 from fastapi import Request
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.templating import Jinja2Templates
 
@@ -11,7 +11,6 @@ templates = Jinja2Templates(directory="public/templates")
 
 async def get_statusAPI(request: Request, id: UUID, service: VideoService):
     video = await service.getStatus(id)
-
     if video is None:
         return JSONResponse(
             None,
@@ -20,12 +19,12 @@ async def get_statusAPI(request: Request, id: UUID, service: VideoService):
 
     if video.errorMessage != "":
         return JSONResponse(
-            video,
+            jsonable_encoder(video),
             500
         )
 
     return JSONResponse(
-        video,
+        jsonable_encoder(video),
         200
     )
 
@@ -34,6 +33,6 @@ async def get_status(request: Request, id: UUID):
         request,
         "pending.html",
         {
-            "video_id": id
+            "videoName": id
         }
     )

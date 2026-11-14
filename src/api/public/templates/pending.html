@@ -8,21 +8,23 @@ Result
     <h1>Pending request</h1>
     <p>Please don't leave the current page!</p>
     <script>
-        const videoId = "{{ video_id }}";
+        const videoName = "{{ videoName }}";
 
         setInterval(async () => {
 
             const response = await fetch(
-                `/api/status/${videoId}`
+                `/api/status/${videoName}`
             );
 
             const data = await response.json();
 
+            console.log(data);
+
             if (data.status === "completed") {
                 window.location.href =
-                    `/result/${videoId}`;
+                    `/result/${videoName}`;
             }
 
-        }, 5000);
+        }, 120000);
     </script>
 {% endblock %}

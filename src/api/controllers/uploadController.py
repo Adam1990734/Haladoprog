@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 
@@ -19,12 +17,12 @@ async def post_upload(
     dto: VideoRequestDto,
     service: VideoService
 ):
-    await service.upload(dto)
+    newVideo = await service.upload(dto)
 
     return templates.TemplateResponse(
         request,
         "pending.html",
         {
-            "videoUpload": dto
+            "videoName": newVideo.getId()
         }
     )

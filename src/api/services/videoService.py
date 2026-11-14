@@ -22,7 +22,7 @@ class VideoService:
       self.__OUTPUT = OUTPUT  
 
     async def upload(self, dto: VideoRequestDto) -> VideoResponseDto:
-        videoId = str(uuid4())
+        videoId = uuid4()
 
         target = f"{self.__INPUT}" + "/" + f"{videoId}.mp4"
 
@@ -31,13 +31,14 @@ class VideoService:
             buffer.write(content)
 
         return VideoResponseDto(
+            videoId,
             VideoStatus.UPLOADED
         )
 
     async def getStatus(self, id: UUID) -> VideoResponseDto:
         inputFilePath = Path(self.__INPUT + "/" + f"{id}.mp4")
         outputFilePath = Path(self.__OUTPUT + "/" + f"{id}_censored.mp4")
-        resp = VideoResponseDto()
+        resp = VideoResponseDto(id)
         resp.setResultPath(outputFilePath)
 
         if not inputFilePath.exists() and not outputFilePath.exists():
@@ -61,7 +62,7 @@ class VideoService:
 
     async def startProcessig(self, id: UUID) -> VideoResponseDto:
         outputFilePath = Path(self.__OUTPUT + "/" + f"{id}_censored.mp4")
-        resp = VideoResponseDto()
+        resp = VideoResponseDto(id)
         resp.setResultPath(outputFilePath)
         resp.setStatus(
             VideoStatus.PROCESSING
