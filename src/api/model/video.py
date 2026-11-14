@@ -1,16 +1,16 @@
+from pathlib import Path
+from uuid import UUID
+from model.videoStatus import VideoStatus
+
 class Video:
-    def __init__(self, name = "", file = None):
-        self.name = name
-        self.file = file
+    id: UUID
+    
+    originalFilename: str
 
-    def getName(self):
-        return self.name
+    uploadPath: Path
 
-    def getFile(self):
-        return self.file
+    resultPath: Path | None = None
 
-    def setName(self, name):
-            self.name = name
+    status: VideoStatus = VideoStatus.UPLOADED
 
-    def setFile(self, file):
-        self.file = file
+    errorMessage: str | None = None

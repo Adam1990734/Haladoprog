@@ -1,9 +1,14 @@
-class VideoRequestDto:
-    def __init__(self, file = None):
-        self.file = file
-    
-    def getFile(self):
-        return self.file
+from fastapi import File
 
-    def setFile(self, file):
+class VideoRequestDto:
+    file : File
+
+    def __init__(
+        self,
+        file: File
+    ):
         self.file = file
+
+    def getFilename(self) -> File:
+        return self.file
+    
