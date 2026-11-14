@@ -24,7 +24,7 @@ class VideoService:
     async def upload(self, dto: VideoRequestDto) -> VideoResponseDto:
         videoId = str(uuid4())
 
-        target = self.__INPUT / f"{videoId}.mp4"
+        target = f"{self.__INPUT}" + "/" + f"{videoId}.mp4"
 
         with open(target, "wb") as buffer:
             content = await dto.getFile().read()
@@ -35,8 +35,8 @@ class VideoService:
         )
 
     async def getStatus(self, id: UUID) -> VideoResponseDto:
-        inputFilePath = Path(self.__INPUT / f"{id}.mp4")
-        outputFilePath = Path(self.__OUTPUT / f"{id}_censored.mp4")
+        inputFilePath = Path(self.__INPUT + "/" + f"{id}.mp4")
+        outputFilePath = Path(self.__OUTPUT + "/" + f"{id}_censored.mp4")
         resp = VideoResponseDto()
         resp.setResultPath(outputFilePath)
 
@@ -60,7 +60,7 @@ class VideoService:
             return resp
 
     async def startProcessig(self, id: UUID) -> VideoResponseDto:
-        outputFilePath = Path(self.__OUTPUT / f"{id}_censored.mp4")
+        outputFilePath = Path(self.__OUTPUT + "/" + f"{id}_censored.mp4")
         resp = VideoResponseDto()
         resp.setResultPath(outputFilePath)
         resp.setStatus(
@@ -69,13 +69,13 @@ class VideoService:
         return resp
 
     async def removeFromInput(self, id: UUID) -> None:
-        filePath = Path(self.__INPUT / f"{id}_censored.mp4")
+        filePath = Path(self.__INPUT + "/" + f"{id}_censored.mp4")
         if not filePath.exists():
             raise FileExistsError("The given file is not exists!")
         filePath.unlink()
 
     async def removeFromOutput(self, id: UUID) -> None:
-        filePath = Path(self.__OUTPUT / f"{id}_censored.mp4")
+        filePath = Path(self.__OUTPUT + "/" + f"{id}_censored.mp4")
         if not filePath.exists():
             raise FileExistsError("The given file is not exists!")
         filePath.unlink()

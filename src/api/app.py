@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from api.router import mainRouter as mainRouter
+from router import mainRouter as mainRouter
 
 app = FastAPI()
 
 app.mount(
     "/videos",
-    StaticFiles(directory="output"),
+    StaticFiles(directory="../output"),
     name="videos"
 )
 

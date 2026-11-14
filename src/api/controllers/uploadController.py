@@ -19,11 +19,11 @@ async def post_upload(
     dto: VideoRequestDto,
     service: VideoService
 ):
-    service.upload(dto)
+    await service.upload(dto)
 
     return templates.TemplateResponse(
         request,
-        "result.html",
+        "pending.html",
         {
             "videoUpload": dto
         }
