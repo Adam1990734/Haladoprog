@@ -10,16 +10,24 @@ from models.videoStatus import VideoStatus
 
 
 class VideoService:
-    __INPUT = "../input"
-    __OUTPUT = "../output"
+    __INPUT: str 
+    __OUTPUT: str
 
-    async def upload(self, file: UploadFile) -> VideoResponseDto:
+    def __init__(
+        self,
+        INPUT: str = "./input",
+        OUTPUT: str = "./output"
+    ):
+      self.__INPUT = INPUT
+      self.__OUTPUT = OUTPUT  
+
+    async def upload(self, dto: VideoRequestDto) -> VideoResponseDto:
         videoId = str(uuid4())
 
         target = self.__INPUT / f"{videoId}.mp4"
 
         with open(target, "wb") as buffer:
-            content = await file.read()
+            content = await dto.getFile().read()
             buffer.write(content)
 
         return VideoResponseDto(

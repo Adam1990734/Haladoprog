@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from fastapi import File, UploadFile, Request
+from fastapi import Request
 from fastapi.templating import Jinja2Templates
 
-UPLOAD_DIR = Path("input")
-UPLOAD_DIR.mkdir(exist_ok=True)
+from models.videoRequestDto import VideoRequestDto
+from services.videoService import VideoService
 
 templates = Jinja2Templates(directory="public/templates")
 
@@ -16,31 +16,15 @@ async def get_upload(request: Request):
 
 async def post_upload(
     request: Request,
-    video: UploadFile = File(...)
+    dto: VideoRequestDto,
+    service: VideoService
 ):
-    allowed_extensions = { ".mp4", ".avi" }
-
-    extension = Path(video.filename).suffix.lower()
-
-    if extension not in allowed_extensions:
-        return templates.TemplateResponse(
-            request,
-            "result.html",
-            {
-                "error": "Not supported format (mp4, avi).",
-                "filename": ""
-            }
-        )
-
-    # service ide kéne majd
-
-    
+    service.upload(dto)
 
     return templates.TemplateResponse(
         request,
         "result.html",
         {
-            "error": "",
-            "filename": video.filename
+            "videoUpload": dto
         }
     )
