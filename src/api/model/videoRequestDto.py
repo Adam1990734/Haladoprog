@@ -1,14 +1,20 @@
-from fastapi import File
+from fastapi import UploadFile
 
 class VideoRequestDto:
-    file : File
+    __file : UploadFile
 
     def __init__(
         self,
-        file: File
+        file: UploadFile
     ):
-        self.file = file
+        self.__file = file
 
-    def getFilename(self) -> File:
-        return self.file
+    def getFilename(self) -> str:
+        return self.__file.filename
+
+    def getType(self) -> str:
+         return self.__file.content_type
+
+    def getFile(self) -> UploadFile:
+        return self.__file
     
