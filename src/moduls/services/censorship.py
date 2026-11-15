@@ -1,6 +1,8 @@
 import wave
 import numpy as np
 
+from moduls.models.censor_mode import CensorMode
+
 
 class CensorshipService:
     def _write_wav(
@@ -57,7 +59,7 @@ class CensorshipService:
         input_wav,
         output_wav,
         ranges,
-        mode="beep"
+        mode=CensorMode.BEEP
     ):
         audio, rate, channels = self._read_wav(
             input_wav
