@@ -1,5 +1,6 @@
 from pathlib import Path
 from models.censor_mode import CensorMode
+from config import Config
 
 def get_mode(args: list[str]) -> CensorMode:
     MODE = "--mode"
@@ -30,9 +31,12 @@ def get_video_source(args: list[str]) -> Path:
     source = None
 
     try:
-        source = Path(
-            args[args.index(SOURCE) + 1]
+        source = Path.joinpath(
+            Path(__file__).parent,
+            Path(Config.INPUT_DIR),
+            Path(args[args.index(SOURCE) + 1])
         )
+        print(source)
     except:
         raise FileNotFoundError("You should always give one path!")
 

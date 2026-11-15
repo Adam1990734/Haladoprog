@@ -1,7 +1,7 @@
 import wave
 import numpy as np
 
-from moduls.models.censor_mode import CensorMode
+from models.censor_mode import CensorMode
 
 
 class CensorshipService:
