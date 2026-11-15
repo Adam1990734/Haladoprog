@@ -32,11 +32,10 @@ def get_video_source(args: list[str]) -> Path:
 
     try:
         source = Path.joinpath(
-            Path(__file__).parent,
+            Path(__file__).parent.parent,
             Path(Config.INPUT_DIR),
             Path(args[args.index(SOURCE) + 1])
         )
-        print(source)
     except:
         raise FileNotFoundError("You should always give one path!")
 

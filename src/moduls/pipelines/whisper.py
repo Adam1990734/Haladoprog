@@ -9,7 +9,6 @@ class WhisperPipeline:
         )
 
     def transcribe(self, audio):
-        print(audio)
         return self.pipeline(
             audio,
             return_timestamps="word"
