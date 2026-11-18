@@ -82,3 +82,65 @@ def audio_pipeline(audio_path):
         szo = sz["text"].strip()
         kezdet, veg = sz["timestamp"]
         print(f"{kezdet:7.2f} mp - {veg:7.2f} mp | {szo}")
+
+    # [c] AI #2 – melyik szó trágár? (tiltólista + AI-modell)
+    print("AI #2 – trágárság-felismerés...")
+    trago_ai = pipeline("text-classification", model=TRAGAR_MODELL)
+    print("  A modell osztálycímkéi:", trago_ai.model.config.id2label)
+    lista = [sz["text"].strip() for sz in szavak]
+    ai_eredmenyek = trago_ai(lista) if lista else []
+    talalatok = []                                     # (kezdet, vég, szó)
+    for sz, szo, ai in zip(szavak, lista, ai_eredmenyek):
+        listas = szo.lower().strip(".,!?\"'") in TILTOTT_SZAVAK or "*" in szo
+        ai_szerint = ai["label"] == TRAGAR_CIMKE and ai["score"] >= KUSZOB_SZOVEG
+        if listas or ai_szerint:
+            kezdet, veg = sz["timestamp"]
+            talalatok.append((kezdet, veg if veg is not None else kezdet + 0.3, szo))
+
+    # [d] A futtató értesítése és döntése
+    if not talalatok:
+        print("  Nem találtam trágár szót – a hang változatlan marad.")
+        ffmpeg("-i", hang_wav, kimenet)
+        return kimenet
+    print(f"\nFIGYELEM: {len(talalatok)} trágár szót találtam a hangban:")
+    for kezdet, veg, szo in talalatok:
+        print(f"   {kezdet:7.2f} mp – {veg:7.2f} mp   {szo}")
+    valasz = input("Mit tegyek? [b] csipogás / [m] némítás / [k] marad: ").strip().lower()
+    mod = {"b": "beep", "m": "mute"}.get(valasz, "none")
+
+    # [e] Cenzúrázás és mentés mp3-ba
+    if mod == "none":
+        ffmpeg("-i", hang_wav, kimenet)
+    else:
+        hang_cenzural(hang_wav, cenz_wav, [(k, v) for k, v, _ in talalatok], mod)
+        ffmpeg("-i", cenz_wav, kimenet)
+    return kimenet
+
+
+# ============================ A TÁRS EREDETI PROGRAMJA ============================
+
+#1. Videófájl beolvasása
+video_path = "C:/Users/local_user/Videos/wow.mp4"
+video = VideoFileClip(video_path)
+
+#2. A hangsáv kinyerése és mentése
+audio_path = "C:/Users/local_user/Videos/hangsav.mp3"
+video.audio.write_audiofile(audio_path)
+
+#3. A hangsáv cenzurálása
+audio_path = audio_pipeline(audio_path)      # a pipeline az audio_path-ot veszi át, és a cenzúrázott hang útvonalát adja vissza
+
+#4. A hang nélküli videó mentése
+video.write_videofile("C:/Users/local_user/Videos/hang_nelkul_video.mp4", codec="libx264", audio=False)
+
+#5. A hang hozzárendelése a videóhoz
+video_clip = VideoFileClip("C:/Users/local_user/Videos/hang_nelkul_video.mp4")
+audio_clip = AudioFileClip(audio_path)       # ez már a cenzúrázott hang
+final_clip = video_clip.with_audio(audio_clip)
+
+#6. Az új videó mentése hanggal együtt
+final_clip.write_videofile("C:/Users/local_user/Videos/kesz_video.mp4", codec="libx264", audio_codec="aac")
+
+video_clip.close()
+audio_clip.close()
+final_clip.close()
