@@ -1,6 +1,9 @@
 import shutil
 import numpy as np
 import wave;
+import os;
+
+from config import Config as cf
 from utils.ffmpeg import run_ffmpeg
 
 class AudioService:
@@ -160,7 +163,7 @@ class AudioService:
         censored_wav,
         mode="beep"
     ):
-        speech_wav = "temp/speech.wav"
+        speech_wav = os.path.join(cf.TEMP_DIR, "speech.wav")
         run_ffmpeg(
             "-i",
             original_wav,
