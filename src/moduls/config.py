@@ -28,5 +28,3 @@ class Config:
         "cunt",
         "stupid"
     ]
-
-print(Config.INPUT_DIR)
