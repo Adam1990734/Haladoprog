@@ -1,13 +1,14 @@
 from threading import Thread
 import uvicorn
+from pyngrok import ngrok
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from router import mainRouter as mainRouter
 
-from pyngrok import ngrok
-ngrok.set_auth_token("3LxKRtH6JT9FSi0dGMJouQpBwUb_39TJoZkDivZ6VYZgMRLCN")
-
 from config import Configs as cf
+
+import nest_asyncio
+nest_asyncio.apply()
 
 app = FastAPI()
 
@@ -19,10 +20,16 @@ app.mount(
 
 app.include_router(mainRouter.router)
 
-public_url = ngrok.connect(8000)
-print("NGROK URL:", public_url)
+def run():
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=8000,
+        loop="asyncio"
+    )
 
 thread = Thread(
-    target=lambda: uvicorn.run(app, host="0.0.0.0", port=8000)
+    target=run,
+    daemon=False
 )
 thread.start()

@@ -1,6 +1,7 @@
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 
+from models.censor_mode import CensorMode
 from models.videoRequestDto import VideoRequestDto
 from services.videoService import VideoService
 
@@ -18,6 +19,10 @@ async def post_upload(
     service: VideoService
 ):
     newVideo = await service.upload(dto)
+    await service.startCensoring(
+        newVideo.id,
+        CensorMode.BEEP
+    )
 
     return templates.TemplateResponse(
         request,

@@ -25,12 +25,12 @@ class VideoService:
       self.__INPUT = INPUT
       self.__OUTPUT = OUTPUT
 
-    async def startCensuring(input, mode: CensorMode = CensorMode.MUTE):
+    async def startCensoring(self, input : UUID, mode: CensorMode = CensorMode.MUTE):
         subprocess.Popen([
             sys.executable,
             str(cf.CENSURE),
-            "--input", input,
-            "--mode", mode
+            "--mode", mode.value,
+            "--source", str(input) + ".mp4"
         ])
 
     async def upload(self, dto: VideoRequestDto) -> VideoResponseDto:
