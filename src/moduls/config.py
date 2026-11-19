@@ -1,10 +1,12 @@
 from dataclasses import dataclass
+from pathlib import Path
+import os
 
 @dataclass
 class Config:
-    INPUT_DIR = "input"
-    OUTPUT_DIR = "output"
-    TEMP_DIR = "temp"
+    INPUT_DIR = os.path.join(str(Path(__file__).resolve().parent), "input")
+    OUTPUT_DIR = os.path.join(str(Path(__file__).resolve().parent), "output")
+    TEMP_DIR = os.path.join(str(Path(__file__).resolve().parent), "temp")
 
     ASR_MODEL = "openai/whisper-small"
 
@@ -26,3 +28,5 @@ class Config:
         "cunt",
         "stupid"
     ]
+
+print(Config.INPUT_DIR)
