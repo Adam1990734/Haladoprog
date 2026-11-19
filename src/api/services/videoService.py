@@ -1,11 +1,15 @@
 from pathlib import Path
 from uuid import UUID, uuid4
+import sys, subprocess
 from fastapi import UploadFile
+
+from config import Configs as cf
 
 from models.video import Video
 from models.videoRequestDto import VideoRequestDto
 from models.videoResponseDto import VideoResponseDto
 from models.videoStatus import VideoStatus
+from models.censor_mode import CensorMode
 
 
 
@@ -15,11 +19,19 @@ class VideoService:
 
     def __init__(
         self,
-        INPUT: str = "./input",
-        OUTPUT: str = "./output"
+        INPUT: str,
+        OUTPUT: str
     ):
       self.__INPUT = INPUT
-      self.__OUTPUT = OUTPUT  
+      self.__OUTPUT = OUTPUT
+
+    async def startCensuring(input, mode: CensorMode = CensorMode.MUTE):
+        subprocess.Popen([
+            sys.executable,
+            str(cf.CENSURE),
+            "--input", input,
+            "--mode", mode
+        ])
 
     async def upload(self, dto: VideoRequestDto) -> VideoResponseDto:
         videoId = uuid4()

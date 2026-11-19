@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request
 from uuid import UUID
 
-from controllers import homeController, statusController, uploadController
+from controllers import homeController, statusController, uploadController, resultController
 from providers.serviceInjector import VideoServiceDependency
 from providers.dtoInjector import VideoRequestDtoDependency
 
@@ -37,3 +37,7 @@ async def statusApiGET(
 @router.get("/status/{id}")
 async def statusGET(req: Request, id: UUID):
     return await statusController.get_status(req, id)
+
+@router.get("/result/{id}")
+async def statusGET(req: Request, id: UUID):
+    return await resultController.get_result(req, id)
