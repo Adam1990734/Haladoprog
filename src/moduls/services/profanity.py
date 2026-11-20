@@ -2,7 +2,6 @@ from models.profanity_match import ProfanityMatch as pm
 
 
 class ProfanityService:
-
     def __init__(
         self,
         classifier,
