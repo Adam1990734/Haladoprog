@@ -21,8 +21,8 @@ async def post_upload(
 ):
     newVideo = await service.upload(dto)
     await service.startCensoring(
-        newVideo.id,
-        CensorMode.BEEP
+        newVideo.getId(),
+        dto.getMode()
     )
 
     return templates.TemplateResponse(
