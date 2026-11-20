@@ -3,7 +3,7 @@ from fastapi import Depends, UploadFile, Form
 from models.videoRequestDto import VideoRequestDto
 from models.censor_mode import CensorMode
 
-def vidoeServiceInjection(
+def vidoeDtoInjection(
         video: UploadFile = Form(...),
         mode: str = Form(...)
 ) -> VideoRequestDto:
@@ -19,5 +19,5 @@ def vidoeServiceInjection(
 
 VideoRequestDtoDependency = Annotated[
     VideoRequestDto,
-    Depends(vidoeServiceInjection)
+    Depends(vidoeDtoInjection)
 ]
