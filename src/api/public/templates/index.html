@@ -5,5 +5,75 @@ Főoldal
 {% endblock %}
 
 {% block content %}
-    <h1>Main page</h1>
+    <div class="row align-items-center py-5">
+        <div class="col-lg-6">
+            <span class="badge bg-primary mb-3">
+                Video hang cenzúrázó platform
+            </span>
+            <h1 class="display-4 fw-bold mb-4">
+                Automatikus Videófeldolgozás
+            </h1>
+            <p class="lead text-muted mb-4">
+                Ez az alkalmazás automatikusan feldolgozza a feltöltött
+                videókat, majd elkészíti a cenzúrázott vagy módosított
+                változatot. Az elkészült eredmény néhány perc múlva megtekinthető.
+            </p>
+            <div class="d-flex gap-3">
+                <a href="/upload"
+                class="btn btn-primary btn-lg">
+                    Feltöltés indítása
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card glass-card shadow-lg">
+                <div class="card-body p-5">
+                    <h4 class="mb-4">
+                        Folyamat
+                    </h4>
+                    <div class="d-flex mb-4">
+                        <div class="me-3">
+                            <span class="badge bg-primary rounded-pill fs-6">
+                                1
+                            </span>
+                        </div>
+                        <div>
+                            <strong>Videó feltöltése</strong>
+                            <div class="text-muted">
+                                Válaszd ki a feldolgozandó videófájlt.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <div class="me-3">
+                            <span class="badge bg-warning rounded-pill fs-6">
+                                2
+                            </span>
+                        </div>
+                        <div>
+                            <strong>Automatikus feldolgozás</strong>
+                            <div class="text-muted">
+                                A rendszer feldolgozza a videót.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="me-3">
+                            <span class="badge bg-success rounded-pill fs-6">
+                                3
+                            </span>
+                        </div>
+                        <div>
+                            <strong>Eredmény megtekintése</strong>
+                            <div class="text-muted">
+                                Az elkészült videó azonnal elérhető és akár le is tölthető.
+                                Megjegyzés: <br>
+                                A videó egy hash névvel fog letöltődni és a végére egy 'censored' kulcsszót tesz.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

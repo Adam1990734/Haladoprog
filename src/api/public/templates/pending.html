@@ -5,26 +5,72 @@ Result
 {% endblock %}
 
 {% block content %}
-    <h1>Pending request</h1>
-    <p>Please don't leave the current page!</p>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card glass-card shadow-lg">
+                <div class="card-body text-center p-5">
+                    <div class="mb-4">
+                        <div class="spinner-border text-primary"
+                            style="width: 4rem; height: 4rem;"
+                            role="status">
+                        </div>
+                    </div>
+                    <h1 class="fw-bold mb-3">
+                        Feldolgozás folyamatban
+                    </h1>
+                    <p class="lead text-muted mb-4">
+                        A videó feldolgozása elindult.
+                    </p>
+                    <div class="alert alert-warning">
+                        <strong>Ne zárd be ezt az oldalt!</strong><br>
+                        Az alkalmazás automatikusan átirányít az eredmény oldalra, amint a feldolgozás elkészül.
+                    </div>
+                    <div class="mt-4">
+                        <h6 class="text-secondary">
+                            Kiválasztott videó
+                        </h6>
+                        <p class="fw-semibold mb-0">
+                            {{ videoName }}
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="text-muted small">
+                        Az állapot ellenőrzése 30 másodpercenként történik.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         const videoName = "{{ videoName }}";
 
-        setInterval(async () => {
+        const checkStatus = async () => {
+            try {
+                const response = await fetch(
+                    `/api/status/${videoName}`
+                );
 
-            const response = await fetch(
-                `/api/status/${videoName}`
-            );
+                const data = await response.json();
 
-            const data = await response.json();
+                if (data.status === "completed") {
+                    window.location.href =
+                        `/result/${videoName}`;
 
-            console.log(data);
+                }
 
-            if (data.status === "completed") {
-                window.location.href =
-                    `/result/${videoName}`;
+            } catch (error) {
+                console.error(
+                    "Status check failed:",
+                    error
+                );
             }
+        };
 
-        }, 1000);
+        checkStatus();
+        
+        setInterval(
+            checkStatus,
+            30000
+        );
     </script>
 {% endblock %}

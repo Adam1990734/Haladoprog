@@ -5,20 +5,69 @@ Uploader
 {% endblock %}
 
 {% block content %}
-    <h1>Video Uploader</h1>
-    <form
-        method="post"
-        enctype="multipart/form-data"
-    >
-        <input
-            type="file"
-            name="video"
-            accept="video/*"
-            required
-        >
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="text-center mb-4">
+                <h1 class="page-title">
+                    Video Upload
+                </h1>
+                <p class="text-muted">
+                    Töltsd fel a feldolgozandó videót.
+                </p>
+            </div>
+            <div class="card glass-card">
+                <div class="card-body p-5">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="mb-4">
+                            <label
+                                for="video"
+                                class="form-label fw-semibold">
+                                Videófájl kiválasztása
+                            </label>
+                            <input
+                                class="form-control form-control-lg"
+                                type="file"
+                                id="video"
+                                name="video"
+                                accept="video/*"
+                                required>
 
-        <button type="submit">
-            Upload
-        </button>
-    </form>
+                        </div>
+                        <div id="file-name"
+                            class="small text-muted mb-4">
+                        </div>
+                        <div class="d-grid">
+                            <button
+                                class="btn btn-primary btn-lg"
+                                type="submit">
+                                Upload Video
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const videoInput =
+                document.getElementById("video");
+
+            const fileName =
+                document.getElementById("file-name");
+
+            videoInput.addEventListener("change", () => {
+
+                if (videoInput.files.length > 0) {
+                    fileName.textContent =
+                        "Kiválasztott fájl: " +
+                        videoInput.files[0].name;
+                }
+
+            });
+
+        });
+    </script>
 {% endblock %}

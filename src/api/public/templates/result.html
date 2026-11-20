@@ -5,6 +5,68 @@ Result
 {% endblock %}
 
 {% block content %}
-    <h1>Result</h1>
-    <iframe src="{{ url }}"></iframe>
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="card glass-card shadow-lg">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">
+                        Feldolgozás sikeresen befejezve
+                    </h3>
+                </div>
+                <div class="card-body p-0">
+                    <iframe
+                        src="{{ url }}"
+                        style="
+                            width: 100%;
+                            height: 700px;
+                            border: none;
+                        ">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card glass-card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Eredmény
+                    </h5>
+                    <p class="text-muted">
+                        A videó feldolgozása sikeresen megtörtént.
+                        Az eredmény bal oldalon megtekinthető.
+                    </p>
+                </div>
+            </div>
+            <div class="card glass-card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5>
+                        Következő lépések
+                    </h5>
+                    <div class="d-grid gap-2 mt-3">
+                        <a href="/upload"
+                        class="btn btn-primary">
+                            Új videó feltöltése
+                        </a>
+                        <a href="/"
+                        class="btn btn-outline-secondary">
+                            Vissza a főoldalra
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card glass-card shadow-sm">
+                <div class="card-body">
+                    <h5>
+                        Információ
+                    </h5>
+                    <ul class="small mb-0">
+                        <li>A feldolgozás befejeződött.</li>
+                        <li>Az eredmény azonnal megtekinthető.</li>
+                        <li>Új videó bármikor feltölthető.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
