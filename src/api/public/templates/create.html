@@ -30,8 +30,29 @@ Uploader
                                 id="video"
                                 name="video"
                                 accept="video/*"
-                                required>
-
+                                required
+                            >
+                            <div class="mb-4">
+                                <label
+                                    for="mode"
+                                    class="form-label fw-semibold">
+                                    Cenzúrázási mód
+                                </label>
+                                <select
+                                    id="mode"
+                                    name="mode"
+                                    class="form-select form-select-lg">
+                                    <option value="mute" selected>
+                                        Hang némítása
+                                    </option>
+                                    <option value="beep">
+                                        Sípolás (Beep)
+                                    </option>
+                                </select>
+                                <div class="form-text">
+                                    Válaszd ki, hogyan kezelje a rendszer a tiltott szavakat.
+                                </div>
+                            </div>
                         </div>
                         <div id="file-name"
                             class="small text-muted mb-4">
