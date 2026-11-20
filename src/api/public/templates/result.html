@@ -14,14 +14,15 @@ Result
                     </h3>
                 </div>
                 <div class="card-body p-0">
-                    <iframe
-                        src="{{ url }}"
+                    <video
+                        class="w-100"
+                        controls
                         style="
-                            width: 100%;
-                            height: 700px;
-                            border: none;
+                            min-height: 75vh;
+                            background: #000;
                         ">
-                    </iframe>
+                        <source src="{{ url }}">
+                    </video>
                 </div>
             </div>
         </div>
