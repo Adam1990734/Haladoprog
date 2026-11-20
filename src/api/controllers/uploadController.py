@@ -4,8 +4,9 @@ from fastapi.templating import Jinja2Templates
 from models.censor_mode import CensorMode
 from models.videoRequestDto import VideoRequestDto
 from services.videoService import VideoService
+from config import Configs as cf
 
-templates = Jinja2Templates(directory="public/templates")
+templates = Jinja2Templates(directory=str(cf.TEMPLATES))
 
 async def get_upload(request: Request):
     return templates.TemplateResponse(
