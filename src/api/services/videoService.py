@@ -51,13 +51,12 @@ class VideoService:
         inputFilePath = Path(self.__INPUT + "/" + f"{id}.mp4")
         outputFilePath = Path(self.__OUTPUT + "/" + f"{id}_censored.mp4")
         resp = VideoResponseDto(id)
-        resp.setResultPath(outputFilePath)
 
         if not inputFilePath.exists() and not outputFilePath.exists():
             resp.setStatus(
                 VideoStatus.FAILED
             )
-            resp.errorMessage("Faild to load the pictiure up!")
+            resp.setErroMessage("Faild to load the pictiure up!")
             return resp
         
         if inputFilePath.exists() and not outputFilePath.exists():
