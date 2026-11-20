@@ -1,7 +1,6 @@
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 
-from models.censor_mode import CensorMode
 from models.videoRequestDto import VideoRequestDto
 from services.videoService import VideoService
 from config import Configs as cf

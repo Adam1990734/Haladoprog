@@ -1,10 +1,13 @@
 from typing import Annotated
-from fastapi import Depends, UploadFile
+from fastapi import Depends, UploadFile, Form
 from models.videoRequestDto import VideoRequestDto
 from models.censor_mode import CensorMode
 
-def vidoeServiceInjection(video: UploadFile, mode: str) -> VideoRequestDto:
-    if mode == "BEEP":
+def vidoeServiceInjection(
+        video: UploadFile = Form(...),
+        mode: str = Form(...)
+) -> VideoRequestDto:
+    if mode == "beep":
         return VideoRequestDto(
             video,
             CensorMode.BEEP
