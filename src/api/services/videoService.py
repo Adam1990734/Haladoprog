@@ -101,10 +101,3 @@ class VideoService:
         result.setErroMessage(video.errorMessage)
         result.setResultPath(video.resultPath)
         return result
-
-    # Middleware-be tervezem mint DI és validálási szempontok szerint
-    @staticmethod
-    def toReqDto(video: UploadFile) -> VideoRequestDto:
-        return VideoRequestDto(
-            video
-        )
